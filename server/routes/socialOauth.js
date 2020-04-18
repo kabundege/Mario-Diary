@@ -13,6 +13,7 @@ route.get("/auth/google",passport.authenticate('google',{scope:['profile','email
 
 route.get('/auth/google/redirect',passport.authenticate('google'),oauthController.auth);
 
+route.get('/auth/logout',oauthController.logOut)
 
 route.get("/auth/facebook",passport.authenticate('facebook',{scope:['email']}));
 

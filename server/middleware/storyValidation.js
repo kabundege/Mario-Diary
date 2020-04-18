@@ -10,5 +10,14 @@ export default class userValidatorMid {
       return responseHandler.send(res);
     }
     return next();
+  }
+  static contactUS(req, res, next) {
+    const { error } = Validator.contactUS(req.body);
+    if (error) {
+      const newMessage = error;
+      responseHandler.error(400, new Error(newMessage));
+      return responseHandler.send(res);
+    }
+    return next();
   }  
 }

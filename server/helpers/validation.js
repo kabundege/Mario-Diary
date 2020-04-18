@@ -43,4 +43,14 @@ export default class UserValidator {
     });
     return schema.validate(user, { abortEarly: false });
   }
+
+  static contactUS(user) {
+    const schema = Joi.object().keys({
+      subject: Joi.string().min(5).required().trim().error(new Error("Minimum subject is 5 words")),
+      content: Joi.string().min(10).required().error(new Error("Minimum Content is 10 words")),
+      authorEmail: Joi.string().email().required().trim().error(new Error("Email must be valid"))
+    });
+    return schema.validate(user, { abortEarly: false });
+  }
+
 }

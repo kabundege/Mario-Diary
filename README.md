@@ -1,5 +1,5 @@
 # **Mario Diary**
-[![Build Status](https://travis-ci.com/kabundege/Mario-Diary.svg?branch=develop)](https://travis-ci.com/kabundege/Mario-Diary)[![Coverage Status](https://coveralls.io/repos/github/kabundege/Mario-Diary/badge.svg?branch=develop)](https://coveralls.io/github/kabundege/Mario-Diary?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/533c68e6c8ce21e10f79/maintainability)](https://codeclimate.com/github/kabundege/Mario-Diary/maintainability)
+[![Build Status](https://travis-ci.com/kabundege/Mario-Diary.svg?branch=develop)](https://travis-ci.com/kabundege/Mario-Diary) [![Coverage Status](https://coveralls.io/repos/github/kabundege/Mario-Diary/badge.svg?branch=develop)](https://coveralls.io/github/kabundege/Mario-Diary?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/533c68e6c8ce21e10f79/maintainability)](https://codeclimate.com/github/kabundege/Mario-Diary/maintainability)
 
 **Project Description**
 
@@ -26,7 +26,7 @@ meaning that you can make your story Public or private.
 ### PROJECT SETUP
 First you need to clone it to your machine:
 ```
-https://github.com/kabundege/Mario_Diary.git
+https://github.com/kabundege/Mario-Diary.git
 ```
 Open it using your favorite IDE
 I used ([vs code](https://code.visualstudio.com/download))

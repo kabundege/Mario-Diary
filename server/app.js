@@ -27,6 +27,13 @@ app.use('/api/v1', user);
 app.use('/api/v1', stories);
 app.use('/api/v1', oauth);
 
+app.get('/',(req, res) =>
+  res.status(200).json({
+    status: 200,
+    message: ' Mario Welcomes You'
+  })
+);
+
 app.use((req, res) =>
   res.status(404).json({
     status: 404,

@@ -4,9 +4,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const server = http.createServer(app);
+http.createServer(app);
 
-const port = process.env.BACKEND_PORT || 8080;
+const port = process.env.PORT || 5050;
 
 app.listen(port,()=>{
     console.log(` You are running port ${port}....`)

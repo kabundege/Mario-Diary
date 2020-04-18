@@ -1,11 +1,11 @@
 import express from "express";
 import StoryController from "../controllers/storiesController";
 import auth from '../middleware/auth';
-import storyValidation from "../middleware/storyValidation";
+import Validation from "../middleware/storyValidation";
 
 const route = express.Router();
 
-route.post('/stories',auth.access,storyValidation.Story,StoryController.createAstory)
+route.post('/stories',auth.access,Validation.Story,StoryController.createAstory)
 
 route.get('/stories',auth.access,StoryController.AllUserStories)
 
@@ -13,7 +13,11 @@ route.get('/public/stories',StoryController.publicStories)
 
 route.get('/story/:storyID',auth.access,StoryController.SpecificStory)
 
-route.patch('/story/:storyID',auth.access,storyValidation.Story,StoryController.updateAstory)
+route.patch('/like/:storyid',StoryController.like)
+
+route.post('/contactUs',Validation.contactUS,StoryController.conctactUs)
+
+route.patch('/story/:storyID',auth.access,Validation.Story,StoryController.updateAstory)
 
 route.delete('/story/:storyID',auth.access,StoryController.deleteAstory)
 
