@@ -28,9 +28,9 @@ export default class social {
         }else{
             const newUser = await Methods.insert(
             'users',
-            `userid,firstname,lastname,email,role,status,${req.user.provider}id`,
+            `userid,firstname,lastname,image,email,role,status,${req.user.provider}id`,
             '$1,$2,$3,$4,$5,$6,$7',
-            [userid, firstname, lastname, req.user.emails[0].value, 'client','active',req.user.id],
+            [userid, firstname, lastname,req.user.photos[0].value,req.user.emails[0].value, 'client','active',req.user.id],
             `'userid,firstname,lastname,email,role,${req.user.provider}'`,
             );
             oauthUser = newUser

@@ -28,7 +28,7 @@ describe('Story Tests', () => {
   });
   it('it should Login successfuly', (done) => {
     const user = {
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
       password: 'aPassword123!',
     };
     chai
@@ -104,6 +104,54 @@ describe('Story Tests', () => {
       .get(`/api/v1/public/stories`)
       .end((err, res) => {
         expect(res.status).to.equal(404);
+        done();
+      });
+  });
+  it('Story With Untitled Document', (done) => {
+      localStorage.setItem("token",AdminToken)
+      const user = {
+        title:"Untitled Document",
+        content: `${process.env.Old_token}`,
+        status : 'public'
+      };
+      chai
+        .request(app)
+        .post('/api/v1/stories')
+        .send(user)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          done();
+        });
+  });
+  it('contact us failure', (done) => {
+    localStorage.setItem("token",AdminToken)
+    const user = {
+      title:"going to school",
+      content: `${process.env.Old_token}`,
+      status : 'public'
+    };
+    chai
+      .request(app)
+      .post('/api/v1/contactUs')
+      .send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      });
+  });
+  it('contact us sucess', (done) => {
+    localStorage.setItem("token",AdminToken)
+    const user = {
+      subject:"going to school",
+      content: `${process.env.Old_token}`,
+      authorEmail : 'kabundege2@outlook.com'
+    };
+    chai
+      .request(app)
+      .post('/api/v1/contactUs')
+      .send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
         done();
       });
   });
@@ -235,7 +283,16 @@ describe('Story Tests', () => {
         done();
       });
   });
-  it('Story delete token found no stories', (done) => {
+  it('Story likes sucessfully', (done) => {
+    chai
+      .request(app)
+      .patch(`/api/v1/like/${storyID}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        done();
+      });
+  });
+  it('Story delete successful', (done) => {
     localStorage.setItem("token",AdminToken)
 
     chai
@@ -246,19 +303,28 @@ describe('Story Tests', () => {
         done();
       });
   });
+  it('Story likes failure', (done) => {
+    chai
+      .request(app)
+      .patch(`/api/v1/like/${storyID}`)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        done();
+      });
+  });
   it('Page Not Found', (done) => {
     localStorage.setItem("token",Usertoken)
 
     chai
       .request(app)
-      .delete(`/api/v1/story/${storyID}`)
+      .get(`/v1/story/${storyID}`)
       
       .end((err, res) => {
         expect(res.status).to.equal(404);
         done();
       });
   });
-  it('Not token', (done) => {
+  it('No token', (done) => {
     localStorage.removeItem("token")
     chai
       .request(app)
@@ -291,12 +357,11 @@ describe('Story Tests', () => {
   });
   it('Invalid Page', (done) => {
     localStorage.setItem("token",AdminToken)
-
     chai
       .request(app)
-      .delete(`/`)
+      .get('/')
       .end((err, res) => {
-        expect(res.status).to.equal(404);
+        expect(res.status).to.equal(200);
         done();
       });
   });

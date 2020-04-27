@@ -23,6 +23,6 @@ route.get('/users',auth.access,userController.allUsers)
 
 route.post("/auth/signin", userValidation.signin, userController.signin);
 
-route.post('/checkToken',userController.token)
+route.get('/checkToken/:token',auth.reset,userController.token)
 
 export default route;

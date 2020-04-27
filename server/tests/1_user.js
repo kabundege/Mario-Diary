@@ -13,7 +13,7 @@ describe('User Tests', () => {
     const newUser = {
       firstName: 'John',
       lastName: 'Ishimwe',
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
     };
     chai
       .request(app)
@@ -47,7 +47,7 @@ describe('User Tests', () => {
     const newUser = {
       firstName: 'John',
       lastName: 'Ishimwe',
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
       password:'kwizera',
       confirmPassword:'kwizera'
     };
@@ -65,7 +65,7 @@ describe('User Tests', () => {
     const newUser = {
       firstName: 'John',
       lastName: 'Ishimwe',
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
       password:'aPassword123!',
       confirmPassword:'aPassword123!'
     };
@@ -74,6 +74,7 @@ describe('User Tests', () => {
       .post('/api/v1/auth/signup')
       .send(newUser)
       .end((err, res) => {
+        Usertoken = res.body.data.token;
         expect(res.statusCode).to.equal(201);
         done();
       });
@@ -83,7 +84,7 @@ describe('User Tests', () => {
     const newUser = {
       firstName: 'John',
       lastName: 'Ishimwe',
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
       password:'aPassword123!',
       confirmPassword:'aPassword123!'
     };
@@ -112,7 +113,32 @@ describe('User Tests', () => {
       });
   });
 
-  it('it should Login successfuly', (done) => {
+  it('should return verification failure', (done) => {
+    const user = {
+      email: 'christophekwizera1@gmail.com',
+      password: 'aPassword123!',
+    };
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        done();
+      });
+  });
+
+  it("should return verification sucess",(done)=>{
+    chai
+      .request(app)
+      .get(`/api/v1/checkToken/${Usertoken}`)
+      .end((req,res)=>{
+        expect(res.status).to.equal(200)
+        done();
+      })
+  })
+
+  it('should return admin Login successfuly', (done) => {
     const user = {
       email: 'kabundege2@outlook.com',
       password: 'aPassword123!',
@@ -128,9 +154,9 @@ describe('User Tests', () => {
       });
   });
 
-  it('it should Login successfuly', (done) => {
+  it('should return user Login successfuly', (done) => {
     const user = {
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
       password: 'aPassword123!',
     };
     chai
@@ -146,7 +172,7 @@ describe('User Tests', () => {
 
   it('it should return incorect password', (done) => {
     const user = {
-      email: 'john45@gmail.com',
+      email: 'christophekwizera1@gmail.com',
       password: 'kwizer4567a',
     };
     chai
@@ -246,29 +272,11 @@ describe('User Tests', () => {
   });
 
   it('checking old token', (done) => {
-    const newAcc = {
-      token : process.env.Old_token
-    };
     chai
       .request(app)
-      .post('/api/v1/checkToken')
-      .send(newAcc)
+      .get(`/api/v1/checkToken/${process.env.Old_token}`)
       .end((err, res) => {
         expect(res.statusCode).to.equal(401);
-        done();
-      });
-  });
-
-  it('Token chech sucessful', (done) => {
-    const newAcc = {
-      token : AdminToken
-    };
-    chai
-      .request(app)
-      .post('/api/v1/checkToken')
-      .send(newAcc)
-      .end((err, res) => {
-        expect(res.statusCode).to.equal(200);
         done();
       });
   });
@@ -345,5 +353,5 @@ describe('User Tests', () => {
         done();
       });
   });
-  })
+})
 
