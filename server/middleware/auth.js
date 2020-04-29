@@ -22,8 +22,6 @@ export default class auth {
       }
       next();
     } catch (ex) {
-      console.log(ex);
-      
       responseHandler.error(401, new Error("token unAuthorized"));
       return responseHandler.send(res);
     }

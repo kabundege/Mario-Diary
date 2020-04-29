@@ -11,7 +11,7 @@ passport.use(new facebookStrategy({
     clientID: process.env.facebookID,
     clientSecret: process.env.facebookSecret,
     callbackURL: "/api/v1/auth/facebook/redirect",
-    profileFields: ['name', 'email']
+    profileFields: ['name', 'email','photos']
   },oauthMid))
 
 passport.use(new GoogleStrategy({

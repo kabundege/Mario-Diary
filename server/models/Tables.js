@@ -12,7 +12,7 @@ const table = `CREATE TABLE IF NOT EXISTS users (
         status VARCHAR(20) default 'active',
         googleid VARCHAR(100),
         facebookid VARCHAR(100),
-        image VARCHAR(100)
+        image VARCHAR(200)
       );
       insert into users values ('1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed','kabundege','kwizera','kabundege2@outlook.com','$2a$10$pVqBtKRnH9QSsblCCPIK4uyWstH8EupqTDAhQStzw/q4S7OHUhAFK',true,'admin','active',' ',' ')ON CONFLICT DO NOTHING returning *;
       CREATE TABLE IF NOT EXISTS stories (
