@@ -53,4 +53,12 @@ export default class UserValidator {
     return schema.validate(user, { abortEarly: false });
   }
 
+  static comment(user) {
+    const schema = Joi.object().keys({
+      author: Joi.string().required().trim().error(new Error("Author's Name is required")),
+      content: Joi.string().min(5).required().error(new Error("Minimum Content is required")),
+    });
+    return schema.validate(user, { abortEarly: false });
+  }
+
 }

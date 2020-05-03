@@ -1,9 +1,9 @@
 import express, { Router } from "express";
 import passport from 'passport';
 import dotenv from 'dotenv';
-import userController from "../controllers/userController";
-import userValidation from "../middleware/uservalidation";
-import auth from '../middleware/auth';
+import userController from "../../controllers/userController";
+import userValidation from "../../middleware/uservalidation";
+import auth from '../../middleware/auth';
 
 const route = express.Router();
 
@@ -17,12 +17,14 @@ route.patch("/auth/reset/:token",auth.reset, userValidation.reset, userControlle
 
 route.post("/auth/email",userValidation.email,userController.email)
 
-// route.patch('/user/:userid',auth.access,storyController.status)
+route.patch('/user/:userid',auth.access,userController.status)
 
 route.get('/users',auth.access,userController.allUsers)
 
 route.post("/auth/signin", userValidation.signin, userController.signin);
 
 route.get('/checkToken/:token',auth.reset,userController.token)
+
+route.get('/profile',auth.access,userController.profile)
 
 export default route;

@@ -1,7 +1,7 @@
 import Validator from "../helpers/validation";
 import responseHandler from "../helpers/responseHandler";
  
-export default class userValidatorMid {
+export default class StoryValidatorMid {
   static Story(req, res, next) {
     const { error } = Validator.story(req.body);
     if (error) {

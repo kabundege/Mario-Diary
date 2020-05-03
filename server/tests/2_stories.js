@@ -87,6 +87,21 @@ describe('Story Tests', () => {
         done();
       });
   });
+  it('should return Content NotFound',(done)=>{
+    const search = {
+        searchType:"story",
+        content:'  '
+    }
+    chai
+        .request(app)
+        .post('/api/v1/search')
+        .send(search)
+        .end((err,res)=>{
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('No Stories Yet');
+            done();
+        });
+  });
   it('No Specific story Failure', (done) => {
     localStorage.setItem("token",AdminToken)
     chai

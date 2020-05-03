@@ -1,7 +1,7 @@
 import express, { Router } from "express";
-import passport from '../config/passport';
+import passport from '../../config/passport';
 import dotenv from 'dotenv';
-import oauthController from "../controllers/oauthController";
+import oauthController from "../../controllers/oauthController";
 
 const route = express.Router();
 

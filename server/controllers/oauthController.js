@@ -42,7 +42,7 @@ export default class social {
         userid: oauthUser.userid
         });
         localStorage.setItem("token",token)
-        return res.redirect(`http://localhost:${process.env.FRONTEND_PORT}/login?token=${token}`)
+        return res.redirect(`${process.env.FRONTEND_PORT}/login?token=${token}`)
     }
 
     static async logOut(req,res){

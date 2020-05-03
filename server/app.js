@@ -3,9 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
-import user from './routes/user';
-import oauth from './routes/socialOauth'
-import stories from './routes/story';
+import routes from './routes/router';
 
 const app = express();
 
@@ -23,15 +21,14 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
  
-app.use('/api/v1', user);
-app.use('/api/v1', stories);
-app.use('/api/v1', oauth);
+app.use('/api/v1', routes);
 
 app.get('/',(req, res) =>
-  res.status(200).json({
-    status: 200,
-    message: ' Mario Welcomes You'
-  })
+  // res.status(200).json({
+  //   status: 200,
+  //   message: ' Mario Welcomes You'
+  // })
+  res.sendFile(__dirname + '/templates/index.html')
 );
 
 app.use((req, res) =>
