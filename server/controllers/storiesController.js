@@ -7,16 +7,17 @@ export default class staffController {
     static async createAstory(req, res) {
       const { title,content,status } = req.body;
       const storyID = uuidv4();
+      
       if(title === 'Untitled Document'){
         responseHandler.error(400,new Error('You Must Enter The Title'))
         return responseHandler.send(res)
       }
-      const user = await Methods.select("*", "users", `userid='${req.user.userid}'`);
+
       const newStr = await Methods.insert(
         "stories",
-        "storyid,ownerId,owner,likes,title,content,share",
-        "$1,$2,$3,$4,$5,$6,$7",
-        [storyID, user[0].userid, user[0].firstname +' '+ user[0].lastname,0, title, content,status],
+        "storyid,ownerId,owner,likes,title,content,share,image",
+        "$1,$2,$3,$4,$5,$6,$7,$8",
+        [storyID, req.userData.userid, req.userData.firstname +' '+ req.userData.lastname,0, title, content,status,req.userData.image],
         "*"
       );
         responseHandler.successful(201, `Story ${title} was created successful`, {
@@ -125,7 +126,7 @@ export default class staffController {
       }
 
     static async like(req,res){
-      const storyID = req.params.storyid
+      const { storyID } = req.params
 
       const Story = await Methods.select("*", "stories", `storyid='${storyID}'`);
       
@@ -146,33 +147,8 @@ export default class staffController {
 
     static async conctactUs(req,res){
       mailer.conctactUs(req.body)
-      responseHandler.successful(200,'Your will Receive a Response in 2 Business Days')
+      responseHandler.successful(200,'Your will Receive a Response in 2 Business Days',req.body)
       return responseHandler.send(res)
-    }
+      }
 
-    // static async status(req,res){
-    //   let id = req.params.userid;
-
-    //   const { status } = req.body;
-      
-    //   let  User = await Methods.select('*','users',`userid='${req.user.userid}'`);
-    //   if(User[0].role !== 'admin'){
-    //     responseHandler.error(403,new Error('Restricted Arrea'))
-    //     return responseHandler.send(res)
-    //   }
-
-    //   if(status!=='active'&&status!=='dormant'){
-    //     responseHandler.error(400,new Error('Invalid status'))
-    //     return responseHandler.send(res)
-    //   }
-  
-    //   let user = await Methods.select('*','users',`userid = '${id}'`)
-    //   if(!user[0]){
-    //     responseHandler.error(404,new Error('Account Not Found'))
-    //     return responseHandler.send(res)
-    //   }
-    //   let Acc = await Methods.update('accounts',`status='${status}'`,`userid='${id}'`,'*');
-    //   responseHandler.successful(200,`${status}ed successfully`,Acc)
-    //   return responseHandler.send(res)
-    //   }
 }

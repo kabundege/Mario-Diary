@@ -1,6 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
+import localStorage from 'localStorage';
 
 const { expect } = chai;
 
@@ -9,6 +10,8 @@ chai.use(chaiHttp);
 describe('User Tests', () => {
   let Usertoken ;
   let AdminToken;
+  let UserID;
+  let UserToken2;
   it('it should return validation error', (done) => {
     const newUser = {
       firstName: 'John',
@@ -63,7 +66,7 @@ describe('User Tests', () => {
 
   it('it should return account created', (done) => {
     const newUser = {
-      firstName: 'John',
+      firstName: 'kwizera',
       lastName: 'Ishimwe',
       email: 'christophekwizera1@gmail.com',
       password:'aPassword123!',
@@ -75,6 +78,26 @@ describe('User Tests', () => {
       .send(newUser)
       .end((err, res) => {
         Usertoken = res.body.data.token;
+        expect(res.statusCode).to.equal(201);
+        done();
+      });
+  });
+
+  it('it should return account created', (done) => {
+    const newUser = {
+      firstName: 'John',
+      lastName: 'kabundege',
+      email: 'christophekwizera@yahoo.fr',
+      password:'aPassword123!',
+      confirmPassword:'aPassword123!'
+    };
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(newUser)
+      .end((err, res) => {
+        UserID = res.body.data.id;
+        UserToken2 = res.body.data.token; 
         expect(res.statusCode).to.equal(201);
         done();
       });
@@ -128,10 +151,20 @@ describe('User Tests', () => {
       });
   });
 
-  it("should return verification sucess",(done)=>{
+  it("should return verification success",(done)=>{
     chai
       .request(app)
       .get(`/api/v1/checkToken/${Usertoken}`)
+      .end((req,res)=>{
+        expect(res.status).to.equal(200)
+        done();
+      })
+  })
+
+  it("should return verification success",(done)=>{
+    chai
+      .request(app)
+      .get(`/api/v1/checkToken/${UserToken2}`)
       .end((req,res)=>{
         expect(res.status).to.equal(200)
         done();
@@ -353,5 +386,106 @@ describe('User Tests', () => {
         done();
       });
   });
-})
 
+  it('it should return Restriction', (done) => {
+    localStorage.setItem("token",Usertoken)
+    const newAcc = {
+      status:"active"
+    };
+    chai
+      .request(app)
+      .patch(`/api/v1/user/${Usertoken}`)
+      .send(newAcc)
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(403);
+        done();
+      });
+  });
+
+  it('it should return Validation Error', (done) => {
+    localStorage.setItem("token",AdminToken)
+    const newAcc = {
+      status:"activation"
+    };
+    chai
+      .request(app)
+      .patch(`/api/v1/user/${Usertoken}`)
+      .send(newAcc)
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(400);
+        done();
+      });
+  });
+
+  it('it should return User NotFound', (done) => {
+    localStorage.setItem("token",AdminToken)
+    const newAcc = {
+      status:"active"
+    };
+    chai
+      .request(app)
+      .patch(`/api/v1/user/97306e9b-0ed8-493e-a900-39027439ae43`)
+      .send(newAcc)
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(404);
+        done();
+      });
+  });
+
+  it('should return user profile', (done) => {
+    localStorage.setItem("token",Usertoken)
+    chai
+      .request(app)
+      .get('/api/v1/profile')
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        done();
+      });
+  });
+
+  it('it should return Account status Changed to dormant', (done) => {
+    localStorage.setItem("token",AdminToken)
+    const newAcc = {
+      status:"dormant"
+    };
+    chai
+      .request(app)
+      .patch(`/api/v1/user/${UserID}`)
+      .send(newAcc)
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(200);
+        done();
+      });
+  });
+
+  it('should return Consult the admin', (done) => {
+    const user = {
+      email: 'christophekwizera@yahoo.fr',
+      password: 'aPassword123!',
+    };
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(user)
+      .end((err, res) => {
+        expect(res.status).to.equal(403);
+        done();
+      });
+  });
+
+  it('it should return Account status Changed to active', (done) => {
+    localStorage.setItem("token",AdminToken)
+    const newAcc = {
+      status:"active"
+    };
+    chai
+      .request(app)
+      .patch(`/api/v1/user/${UserID}`)
+      .send(newAcc)
+      .end((err, res) => {
+        expect(res.statusCode).to.equal(200);
+        done();
+      });
+  });
+  
+})

@@ -21,7 +21,7 @@
     "table": "babel-node ./server/models/Tables.js",
     "buildTables": "node ./build/models/createTables.js",
     "devtable": "babel-node ./server/models/createTables.js",
-    "React": "cd.. && cd react && cd Church && npm start",
+    "React": "cd.. && cd Mario-FrontEnd && npm start",
     "build": "babel server --out-dir build && npm run buildTables"
   },
   "repository": {
@@ -48,7 +48,7 @@
     "joi-password-complexity": "^4.0.0",
     "jsonwebtoken": "^8.5.1",
     "localStorage": "^1.0.4",
-    "morgan": "^1.9.1",
+    "morgan": "^1.10.0",
     "nexmo": "^2.6.0",
     "nodemailer": "^6.4.5",
     "nodemon": "^2.0.2",
@@ -57,6 +57,7 @@
     "passport-facebook": "^3.0.0",
     "passport-google-oauth20": "^2.0.0",
     "pg": "^7.18.1",
+    "socket.io": "^2.3.0",
     "uuid": "^3.4.0"
   },
   "devDependencies": {
@@ -82,6 +83,6 @@
   },
   "engines": {
     "node": "12.16.2",
-    "npm":"6.14.4"
+    "npm": "6.14.4"
   }
 }

@@ -8,7 +8,7 @@ export default class auth {
     const token = localStorage.getItem("token") 
     // const token = req.header("token")
     if (!token) {
-      responseHandler.error(401, new Error("no token provided"));
+      responseHandler.error(401, new Error("No Token Provided"));
       return responseHandler.send(res);
     }
 
@@ -17,12 +17,13 @@ export default class auth {
       req.user = decoded;
       let  author = await Methods.select('*','users',`userid='${req.user.userid}'`);
       if(!author['0']){
-        responseHandler.error(401,new Error('Token has expired'))
+        responseHandler.error(401,new Error('Token has Expired'))
         return responseHandler.send(res)
       }
+      req.userData = author[0];
       next();
     } catch (ex) {
-      responseHandler.error(401, new Error("token unAuthorized"));
+      responseHandler.error(401, new Error("Token unAuthorized"));
       return responseHandler.send(res);
     }
   }
@@ -34,12 +35,13 @@ export default class auth {
       req.user = decoded;
       let  author = await Methods.select('*','users',`userid='${req.user.userid}'`);
       if(!author['0']){
-        responseHandler.error(401,new Error('Token has expired'))
+        responseHandler.error(401,new Error('Token has Expired'))
         return responseHandler.send(res)
       }
+      req.userData = author[0];
       next();
     } catch (ex) {
-      responseHandler.error(401, new Error("token unAuthorized"));
+      responseHandler.error(401, new Error("Token unAuthorized"));
       return responseHandler.send(res);
     }
   }

@@ -1,7 +1,7 @@
 import express from "express";
-import StoryController from "../controllers/storiesController";
-import auth from '../middleware/auth';
-import Validation from "../middleware/storyValidation";
+import StoryController from "../../controllers/storiesController";
+import auth from '../../middleware/auth';
+import Validation from "../../middleware/storyValidation";
 
 const route = express.Router();
 
@@ -13,7 +13,7 @@ route.get('/public/stories',StoryController.publicStories)
 
 route.get('/story/:storyID',auth.access,StoryController.SpecificStory)
 
-route.patch('/like/:storyid',StoryController.like)
+route.patch('/like/:storyID',StoryController.like)
 
 route.post('/contactUs',Validation.contactUS,StoryController.conctactUs)
 
